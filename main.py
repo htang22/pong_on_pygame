@@ -2,6 +2,8 @@ import pygame
 import display
 import paddle
 import ball
+import score
+
 
 pygame.init()
 y_speed = 15
@@ -9,8 +11,10 @@ y_speed = 15
 pygame.display.set_caption("Pong")
 
 ball = ball.Ball()
+score = score.Score()
 display = display.Display()
 screen = display.screen
+
 left_paddle = paddle.Paddle("left")
 right_paddle = paddle.Paddle("right")
 
@@ -43,8 +47,25 @@ while running:
     # reset ball if goes past the paddle
     #TODO #1 add score once ball goes past the paddle
     if ball.x_cord < 30 or ball.x_cord > 770:
-        ball.reset_ball()
+
+        if ball.x_cord < 30:
+            score.right_score += 1
+            score.show_score(screen)
+        elif ball.x_cord > 770:
+            score.left_score += 1
+            score.show_score(screen)
         ball.ball_x_speed *= -1
+        ball.reset_ball()
+        ball.ball_x_speed = 5
+
+
+
+    #score
+    score.show_score(screen)
+
+    #Game over
+    score.game_over()
+
 
 
 
