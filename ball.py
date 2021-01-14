@@ -9,3 +9,6 @@ class Ball:
         self.color = (255, 255, 255)
         self.ball_y_speed = 5
         self.ball_x_speed = 5
+    def reset_ball(self):
+        self.x_cord = 387.5
+        self.y_cord = 300
