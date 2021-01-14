@@ -17,7 +17,6 @@ right_paddle = paddle.Paddle("right")
 
 running = True
 while running:
-    pygame.time.delay(40)
     screen.fill((0, 0, 0))
     #Draw the paddles
     right_pad = pygame.draw.rect(screen, right_paddle.color,
@@ -41,10 +40,16 @@ while running:
             ball.x_cord += ball.ball_x_speed
         ball.ball_x_speed *= 1.1
 
+    # reset ball if goes past the paddle
+    #TODO #1 add score once ball goes past the paddle
+    if ball.x_cord < 30 or ball.x_cord > 770:
+        ball.reset_ball()
+        ball.ball_x_speed *= -1
 
 
 
-    #Checks to see if a key is pressed if one is then movee a paddle
+
+    #Checks to see if a key is pressed if one is then move a paddle
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_UP] and right_paddle.y_cord > 0:
@@ -62,4 +67,5 @@ while running:
             running = False
 
     pygame.display.update()
+    pygame.time.delay(40)
 pygame.quit()
