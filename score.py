@@ -13,7 +13,8 @@ class Score:
         font = pygame.font.Font("freesansbold.ttf", 80)
         right_score = font.render(f"{self.right_score}", True, (255, 255, 255))
         left_score = font.render(f"{self.left_score}", True, (255, 255, 255))
-        pygame.draw.rect(window, (255, 255, 255), (400, 0, 10, 600))
+        pygame.draw.rect(window, (255, 255, 255), (400, 0, 10, 275))
+        pygame.draw.rect(window, (255, 255, 255), (400, 350, 10, 275))
         window.blit(right_score, self.right_cord)
         window.blit(left_score, self.left_cord)
 
