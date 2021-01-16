@@ -2,7 +2,6 @@ import pygame
 
 
 class Score:
-
     def __init__(self):
         self.right_score = 0
         self.left_score = 0

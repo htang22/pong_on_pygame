@@ -3,7 +3,7 @@ import pygame
 
 class Ball:
     def __init__(self):
-        self.x_cord = 491
+        self.x_cord = 391
         self.y_cord = 300
         self.height = 25
         self.width = 25
