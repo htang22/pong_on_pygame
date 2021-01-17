@@ -14,6 +14,11 @@ class Display:
         press_space = font.render("Press the Space bar to play pong", True, (255, 255, 255))
         window.blit(press_space, self.start_message_cord)
 
+    def create_text(self, coord, color, size, message, window):
+        font = pygame.font.Font("freesansbold.ttf", size)
+        text = font.render(f"{message}", True, color)
+        window.blit(text, coord)
+
     def display_title(self, window, coord, color, font):
         font = pygame.font.Font("freesansbold.ttf", font)
         press_space = font.render("Pong", True, color)
