@@ -15,16 +15,66 @@ class Game:
         self.display = Display()
         self.screen = self.display.screen
         self.y_speed = 15
+        self.click = False
+
+    def get_mouse_pos(self):
+        mx, my = pygame.mouse.get_pos()
+        return mx, my
+
+    def pause_screen(self,ball_x_speed, ball_y_speed):
+        running = True
+        while running:
+            self.click = False
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        self.click = True
+            play_button = pygame.rect.Rect((300, 250, 50, 50))
+            pygame.draw.rect(self.screen, (0, 255, 0), play_button)
+            pygame.draw.polygon(self.screen, (255, 255, 255), ((315, 260), (315, 290), (340, 275)))
+            home_button = pygame.rect.Rect((460, 250, 50, 50))
+            pygame.draw.rect(self.screen, (0, 0, 255), home_button)
+            pygame.draw.polygon(self.screen, (255, 255, 255), ((465, 270), (505, 270), (485, 255)))
+            pygame.draw.rect(self.screen, (255, 255, 255), (465, 270, 15, 20))
+            pygame.draw.rect(self.screen, (255, 255, 255), (491, 270, 15, 20))
+            pygame.draw.rect(self.screen, (255, 255, 255), (465, 270, 40, 7.5))
+
+            # self.display.create_text((300, 300), (255, 255, 255), 50, "", self.screen)
+
+            self.ball.ball_x_speed = 0
+            self.ball.ball_y_speed = 0
+            self.y_speed = 0
+            if play_button.collidepoint((self.get_mouse_pos())):
+                if self.click:
+                    print("clicked play button")
+                    self.ball.ball_x_speed = ball_x_speed
+                    self.ball.ball_y_speed = ball_y_speed
+                    self.y_speed = 15
+                    running = False
+            if home_button.collidepoint((self.get_mouse_pos())):
+                if self.click:
+                    print("Clicked Home button")
+                    return True
+            pygame.display.update()
+        return
+
 
 
     def run_game(self):
-
-        while True:
+        running = True
+        while running:
+            self.click = False
             self.score.left_color = self.left_paddle.color
             self.score.right_color = self.right_paddle.color
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+
+                    if event.button == 1:
+                        self.click = True
             keys = pygame.key.get_pressed()
             self.screen.fill((0, 0, 0))
             # Draw the paddles
@@ -80,9 +130,19 @@ class Game:
                     self.ball.ball_x_speed *= -1
                 self.ball.reset_ball()
 
+            mx, my = pygame.mouse.get_pos()
 
             # score
             self.score.show_score(self.screen, (255, 255, 255))
+            pause_button = pygame.rect.Rect((380, 0, 50, 50))
+            pygame.draw.rect(self.screen, (0, 0, 0), pause_button)
+            self.display.create_text((391, 0), (255, 255, 255), 50, "ll", self.screen)
+            if pause_button.collidepoint((mx, my)):
+                if self.click:
+                    print("clicked pause")
+                    if self.pause_screen(self.ball.ball_x_speed, self.ball.ball_y_speed) == True:
+                        print("going home")
+                        return True
 
             pygame.display.update()
             pygame.time.delay(40)
@@ -96,9 +156,6 @@ class Game:
 
                 #TODO add another screen/button that asks user to play again, exit game, or quit to menu
 
-                return False
-            else:
-                return True
 
             # Checks to see if a key is pressed if one is then move a paddle
 

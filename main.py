@@ -137,8 +137,10 @@ while running:
 
     while game_active:
         game_active = game.run_game()
-        if game.run_game() == False:
+        if not game.run_game():
             quit()
+        if game.run_game():
+            start_menu()
         game_count += 1
 
         # quitting the game
