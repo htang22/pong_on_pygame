@@ -1,6 +1,10 @@
 import pygame
-import display, paddle
-import game, sys, ball
+
+import ball
+import display
+import game
+import paddle
+import sys
 
 pygame.init()
 
@@ -49,12 +53,11 @@ def color_menu():
         create_colors(0)
         create_colors(400)
         click = False
-        display.create_text((50, 100),WHITE, 50,"Left Paddle", screen)
+        display.create_text((50, 100), WHITE, 50, "Left Paddle", screen)
         display.create_text((450, 100), WHITE, 50, "Right Paddle", screen)
 
-
         mx, my = pygame.mouse.get_pos()
-        quit_to_start = create_rect((290, 400, 230, 60),colors[1])
+        quit_to_start = create_rect((290, 400, 230, 60), colors[1])
         display.create_text((295, 400), WHITE, 35, "Quit to menu", screen)
 
         for event in pygame.event.get():
@@ -88,7 +91,6 @@ def create_rect(dimension, color):
     return name
 
 
-
 def start_menu():
     menu_running = True
     click = False
@@ -105,7 +107,7 @@ def start_menu():
         mx, my = pygame.mouse.get_pos()
         if start_button.collidepoint((mx, my)):
             if click:
-                return True
+                game.run_game()
         if color_button.collidepoint((mx, my)):
             if click:
                 color_menu()
@@ -114,7 +116,6 @@ def start_menu():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-                pygame.quit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -135,10 +136,12 @@ while running:
     # if keys[pygame.K_SPACE]:
     #     game_active = True
 
-    while game_active:
+    while start_menu():
         game_active = game.run_game()
-        if game.run_game() == False:
+        if not game.run_game():
             quit()
+        if game.run_game():
+            start_menu()
         game_count += 1
 
         # quitting the game
@@ -147,11 +150,9 @@ while running:
                 game_active = False
                 running = False
 
-
-    display.display_start_message(screen)
-
-    if game_count != 0:
-        display.display_game_over(screen)
-    game_active = start_menu()
+    # display.display_start_message(screen)
+    #
+    # if game_count != 0:
+    #     display.display_game_over(screen)
     pygame.display.update()
 pygame.quit()
