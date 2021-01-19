@@ -10,7 +10,7 @@ class Score:
         self.left_color = (0, 0, 0)
         self.right_color = (0, 0, 0)
 
-    def show_score(self,window, color):
+    def show_score(self, window, color):
         font = pygame.font.Font("freesansbold.ttf", 80)
         right_score = font.render(f"{self.right_score}", True, self.right_color)
         left_score = font.render(f"{self.left_score}", True, self.left_color)
@@ -20,15 +20,11 @@ class Score:
         window.blit(left_score, self.left_cord)
 
     def game_over(self):
-        if self.left_score == 1 or self.right_score == 1:
+        if self.left_score == 7 or self.right_score == 7:
             return True
         else:
             return False
+
     def reset_score(self):
         self.right_score = 0
         self.left_score = 0
-
-
-
-
-
