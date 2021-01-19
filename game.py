@@ -19,7 +19,7 @@ class Game:
         self.right_paddle = right_player
         self.display = Display()
         self.screen = self.display.screen
-        self.y_speed = 10
+        self.y_speed = 8
         self.click = False
         self.reload = pygame.image.load("reload.png")
         self.default_ball_speed = 2
@@ -71,14 +71,14 @@ class Game:
                     print("clicked play button")
                     self.ball.ball_x_speed = ball_x_speed
                     self.ball.ball_y_speed = ball_y_speed
-                    self.y_speed = 15
+                    self.y_speed = 8
                     running = False
             if home_button.collidepoint((get_mouse_pos())):
                 if self.click:
                     print("Clicked Home button")
                     self.ball.ball_x_speed = ball_x_speed
                     self.ball.ball_y_speed = ball_y_speed
-                    self.y_speed = 15
+                    self.y_speed = 8
                     return True
             pygame.display.update()
         return
